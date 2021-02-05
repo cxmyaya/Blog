@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0d7669"],{"773f":function(s,p,t){"use strict";var a={baseApiUrl:"http://127.0.0.1:8888/api/v1",wssApiUrl:"ws://127.0.0.1:12581",hostname:"http://localhost:8080"};p["a"]=a}}]);
+//# sourceMappingURL=chunk-2d0d7669.e6f391a6.js.map

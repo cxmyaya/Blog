@@ -6,9 +6,9 @@ Vue.use(VueRouter)
 let projectRouterConfig = [
   {
     path:'/',
-    redirect:'/home'
+    redirect:'/home/article'
   },{
-    path:'/home',
+    path:'/home/:module',
     name:'home',
     component:() => import('./views/Home')
   },{
@@ -20,13 +20,14 @@ let projectRouterConfig = [
     name:'articleEdit',
     component:() => import('./views/ArticleEdit')
   },{
-    path:'/articleDetail/:id',
-    name:'articleDetail',
-    component:() => import('./views/ArticleDetail')
-  },{
     path:'/blogList/:searchKey',
     name:'blogList',
     component:() => import('./views/BlogList')
+  },
+  {
+    path:'/articleDetail/:id',
+    name:'articleDetail',
+    component:() => import('../../components/ArticleDetail')
   }
 ]
 export default new VueRouter({

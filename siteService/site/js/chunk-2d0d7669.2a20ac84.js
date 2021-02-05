@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0d7669"],{"773f":function(p,s,n){"use strict";var t={baseApiUrl:"http://8.129.78.82:8888/api/v1",wssApiUrl:"ws://8.129.78.82:12581",hostname:"http://8.129.78.82"};s["a"]=t}}]);

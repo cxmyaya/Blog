@@ -2,7 +2,7 @@ module.exports = {
   publicPath:'./', //公共路径  当前目录
   outputDir:'site', //输出目录
   pages:{
-    adimin:{
+    admin:{
       entry:'src/pages/admin/main.js', //应用入口配置
       template:'public/admin.html', //html模板
       filename:'admin.html', //打包文件名

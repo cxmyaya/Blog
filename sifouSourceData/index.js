@@ -35,12 +35,34 @@ app.all('*',function(req,res,next){
 let {uploadImgFileApp} = require('./service/img.file.upload.service')
 let {getImgFileApp} = require('./service/img.file.get.service')
 let {authenticationApp} = require('./service/identifyAuthenticationService')
+let {blogApp} = require('./service/blogDataService')
+let {userDetailApp} = require('./service/userDetailService')
+let {tipOffApp} = require('./service/tipOffService')
+let {webSiteDataApp} = require('./service/webSiteDataService')
 
 //启用各种服务
 app.use(apiAddr.uploadImgApiAddr,uploadImgFileApp)
 app.use(apiAddr.getImgApiAddr,getImgFileApp)
 app.use(apiAddr.authenticationApiAddr,authenticationApp)
+app.use(apiAddr.blogApiAddr,blogApp)
+app.use(apiAddr.userDetailApiApp,userDetailApp)
+app.use(apiAddr.tipOffApiApp,tipOffApp)
+app.use(apiAddr.webSiteDataApiApp,webSiteDataApp)
 
 //启动服务
 app.listen(8888)
 console.log('思否后端系统启动了~')
+
+const WebSocket =  require('ws')
+const wss = new WebSocket.Server({port:12581})
+let userList = []
+wss.on('connection',function connection(user){
+  userList.push(user) //当用户连接就把用户存起来
+  user.on('message', function inconming(message){
+    for(let i = 0, len = userList.length; i < len; i++){
+      if(userList[i] !== user){
+        userList[i].send(message)
+      }
+    }
+  })
+})

@@ -1,30 +1,47 @@
 <template>
-  <div style="width:100vw;height: 100vh; background-color: rgb(226,229,248);">
+  <div style="width:100vw;height: 100vh;   background-image: linear-gradient(to bottom right, rgb(114, 135, 254), rgb(130, 88, 186));">
     <el-row  style="position:relative;width:100%;height: 100%;">
-      <el-col :span="10" class="col-class">
+      <el-col :span="24" class="col-class">
         <div class="login-wrapper" v-if='isLogin' :key='1'>
-          <el-form :model="loginForm" ref='loginForm' :rules="rules" size="mini" label-width="65px">
-            <el-form-item label="用户名" prop="username">
-              <el-input v-model="loginForm.username" clearable ></el-input>
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-              <el-input v-model="loginForm.password" clearable type="password"></el-input>
-            </el-form-item>
-            <el-form-item style="text-align: end;">
-              <el-button type="primary" plain @click="reset('loginForm')">重置</el-button>
-              <el-button type="primary" @click='submitForm("loginForm")'>登录</el-button>
-            </el-form-item>
-            <el-form-item style="text-align: end;">
-              <span style="color:#606266">没有账号？点击</span><el-button style="font-size: 14px;" type='text' @click='switchStatus("loginForm")' size="mini">注册</el-button>
-            </el-form-item>
-          </el-form>
+          <div class="login">
+            <el-form :model="loginForm" ref='loginForm' :rules="rules" size="mini" class="left">
+
+              <div class="title">
+                  <span>登录</span>
+              </div>
+              <div class="input">
+                <el-form-item prop="username">
+                  <input type="text" placeholder="用户名" v-model='loginForm.username'>
+                </el-form-item>
+                <el-form-item prop="password">
+                  <input type="password" placeholder="密码" v-model='loginForm.password' />
+                </el-form-item>
+              </div>
+              <!-- <a href="#">忘记密码？</a> -->
+            </el-form>
+        
+            <div class="right">
+                <div class="register">
+                    <span @click='switchStatus("loginForm")' style='color:#fff;cursor: pointer;'> 注册</span>
+                </div>
+               <div class="submit">
+                    <a href="#" @click='submitForm("loginForm")'>登录</a>
+               </div>
+                
+            </div>
+        </div>
           
         </div>
 
         <div class="register-wrapper" v-else :key='2'>
-          <el-form :model="registerForm" ref='registerForm' :rules="rules" size="mini" label-width="80px">
-            <el-form-item label="头像" prop="avatar">
-              <el-upload
+          <div class="login">
+            <el-form :model="registerForm" ref='registerForm' :rules="rules" size="mini" class="left">
+
+              <div class="title">
+                  <span>注册</span>
+              </div>
+              <el-form-item  prop="avatar" style='text-align: center;margin-top: 20px;'>
+                <el-upload
                 class="avatar-uploader"
                 :action="`${defaultConfig.baseApiUrl}/uploadImg`"
                 :show-file-list="false"
@@ -34,28 +51,33 @@
                 <img v-if="registerForm.avatar" :src="registerForm.avatar" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
-            </el-form-item>
-            <el-form-item label="用户名" prop="username">
-              <el-input v-model="registerForm.username" clearable ></el-input>
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-              <el-input v-model="registerForm.password" clearable type="password"></el-input>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="confirmPassword">
-              <el-input v-model="registerForm.confirmPassword" clearable type="password"></el-input>
-            </el-form-item>
-            <el-form-item style="text-align: end;">
-              <el-button type="primary" plain @click="reset('registerForm')">重置</el-button>
-              <el-button type="primary" @click='submitForm("registerForm")'>注册</el-button>
-            </el-form-item>
-            <el-form-item style="text-align: end;">
-              <span style="color:#606266">有账号？点击</span><el-button style="font-size: 14px;" type='text' @click='switchStatus("registerForm")' size="mini">登录</el-button>
-            </el-form-item>
-          </el-form>
+              </el-form-item>
+              <div class="input">
+                <el-form-item prop="username">
+                  <input type="text" placeholder="用户名" v-model='registerForm.username'>
+                  <div class="tips">用户名长度为6~10个字符之间</div>
+                </el-form-item>
+                <el-form-item prop="password">
+                  <input type="password" placeholder="密码" v-model='registerForm.password' />
+                  <div class="tips">密码长度为6~10个字符之间</div>
+                </el-form-item>
+                <el-form-item prop="confirmPassword">
+                  <input type="password" placeholder="确认密码" v-model='registerForm.confirmPassword' />
+                </el-form-item>
+              </div>
+            </el-form>
+        
+            <div class="right">
+                <div class="register">
+                    <span @click='switchStatus("registerForm")' style='color:#fff;cursor: pointer;'> 登录</span>
+                </div>
+               <div class="submit">
+                    <a href="#" @click='submitForm("registerForm")'>注册</a>
+               </div>
+                
+            </div>
         </div>
-      </el-col>
-      <el-col :span="14" class="bg-img">
-
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -92,6 +114,8 @@
           username:'',
           password:''
         },
+        leftTitle:'登录',
+        rightTitle:'注册',
         rules:{
           username:[{
             required:true,
@@ -131,6 +155,10 @@
     methods:{
       switchStatus(formName){
         this.$nextTick(() => {
+          // let temp = this.leftTitle
+          // this.leftTitle = this.rightTitle
+          // this.rightTitle = temp
+          // console.log(temp,this.rightTitle)
           this.$refs[formName].resetFields()
         })
         this.isLogin = !this.isLogin
@@ -139,6 +167,7 @@
         this.$refs[formName].resetFields()
       },
       submitForm(formName){
+        console.log(formName)
         this.$refs[formName].validate(valid => {
           if(valid){
             if(formName === 'loginForm'){
@@ -147,7 +176,7 @@
                   this.$message.success(res.data.message)
                   sessionStorage.removeItem('Authorization')
                   sessionStorage.setItem('Authorization',res.headers.authorization) //保存令牌
-                  window.location.replace('http://localhost:8080/home.html')
+                  window.location.replace(`${defaultConfig.hostname}/index.html`)
                 }else{
                   this.$message.error(res.data.message || '登录失败')
                 }
@@ -158,9 +187,9 @@
                   this.$message.success(res.data.message)
                   sessionStorage.removeItem('Authorization')
                   sessionStorage.setItem('Authorization',res.headers.authorization) //保存令牌
-                  window.location.replace('http://localhost:8080/login.html')
+                  window.location.replace(`${defaultConfig.hostname}/login.html`)
                 }else{
-                  this.$message.error('注册失败')
+                  this.$message.error(res.data.message)
                 }
               })
             }
@@ -200,7 +229,7 @@
     overflow: hidden;
   }
   /deep/ .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
+    border-color: rgb(237, 221, 22);
   }
   .avatar-uploader-icon {
     font-size: 28px;
@@ -208,4 +237,147 @@
     width: 150px;
     height: 150px;
     line-height: 150px;
-    tex
+    text-align: center;
+  }
+  .avatar {
+    width: 150px;
+    height: 150px;
+    display: block;
+  }
+  .col-class{
+    position: absolute;
+    top: 50%;
+    margin: 0 auto;
+    transform: translateY(-50%);
+  }
+
+  a{
+      text-decoration: none;
+      color: #000;
+  }
+  .login{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 600px;
+      /* height: 300px; */
+      border-radius: 15px;
+      box-shadow: 0 10px 50px 0 rgb(59, 45, 159);
+      background-color:rgb(95, 76, 194);
+  }
+  .login > .left{
+      box-sizing: border-box;
+      float: left;
+      width: 400px;
+      height: 100%;
+      padding: 60px;
+      border-radius: 15px 0 0 15px;
+      background-image: linear-gradient(to bottom right, rgb(118, 76, 163), rgb(92, 103, 211));
+  }
+  .login > .left > .title > span{
+      font-size: 18px;
+      font-weight: bold;
+      color:#fff;
+      border-bottom: 3px solid rgb(237, 221, 22);
+  }
+  .login > .right > .register > span{
+    border-bottom: 3px solid transparent;
+    font-size: 18px; 
+    font-weight: bold;
+  }
+  .login > .right > .register > span:hover{
+    border-bottom-color: yellow;
+    transition: 1s;
+  }
+  .login > .left > .input{
+      /* padding: 20px 0; */
+  }
+  ::-webkit-input-placeholder{
+      color: rgb(199, 191, 219);
+  }
+  .login  .left  .input{
+      position: relative;
+  }
+  .login  .left  .input input{
+      display: block;
+      border: none;
+      outline: none;
+      background:none;
+      width: 100%;
+      padding:4px 0;
+      margin:20px 0;
+      color:#fff;
+      border-bottom:1px solid rgb(199, 191, 219) ;
+  }
+  .login  .left  .input input:hover{
+      border-bottom-color: rgb(237, 221, 22);;
+      transition: .6s;
+  }
+  .login  .left  .input input:hover + .tips{
+      opacity: 1; 
+  }
+  .login  .left  .input  input + .tips{
+      position: absolute;
+      top: 20px;
+      left:284px;
+      white-space: nowrap;
+      color: #fff;
+      border-radius: 6px;
+      background-image: linear-gradient(to bottom right, rgb(118, 76, 163), rgb(92, 103, 211));
+      transition: .6s;
+      opacity: 0;
+  }
+  .login > .left > a{
+      color:rgb(199, 191, 219);
+      margin-bottom: 0px;
+  }
+  .login > .left > a:hover{
+      color:#fff;
+  }
+  .login > .right{
+      /* box-sizing: border-box;
+      float: left;
+      width: calc(100% - 400px);
+      height: 100%;
+      padding: 60px 0; 
+      text-align:center; */
+  
+      position: absolute;
+      right: 13%;
+      box-sizing: border-box;
+      float: left;
+      /* width: calc(100% - 400px); */
+      height: 100%;
+      padding: 60px 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+  .login > .right > .register > a{
+      color:#fff;
+  }
+  .login > .right > .submit > a{
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      color:#fff;
+      font-size: 12px;
+      border-radius: 50%;
+      border: 1px solid rgb(237, 221, 22) ;
+  }
+  /* .login > .right > .submit {
+      margin-top: 130px;
+  } */
+  .login > .right > .submit > a:hover{
+      background-color: rgb(237, 221, 22);
+  }
+  /deep/ .el-form-item--mini.el-form-item, .el-form-item--small.el-form-item{
+    margin-bottom: 0;
+  }
+  /deep/ .el-form-item__error{
+    top:80%
+  }
+</style>
